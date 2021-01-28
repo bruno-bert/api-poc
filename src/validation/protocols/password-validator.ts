@@ -1,3 +1,3 @@
 export interface PasswordValidator {
-  isValid: (password: string, rules: {}) => boolean
+  isValid: (password: string, rules?: {}) => boolean
 }

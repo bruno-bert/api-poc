@@ -1,7 +1,7 @@
 import { makeSignUpValidation } from '@/main/factories'
-import { ValidationComposite, RequiredFieldValidation, CompareFieldsValidation, EmailValidation } from '@/validation/validators'
+import { ValidationComposite, RequiredFieldValidation, CompareFieldsValidation, EmailValidation, StrongPasswordValidation } from '@/validation/validators'
 import { Validation } from '@/presentation/protocols'
-import { EmailValidatorAdapter } from '@/infra/validators'
+import { EmailValidatorAdapter, PasswordValidatorAdapter } from '@/infra/validators'
 
 jest.mock('@/validation/validators/validation-composite')
 
@@ -14,6 +14,7 @@ describe('SignUpValidation Factory', () => {
     }
     validations.push(new CompareFieldsValidation('password', 'passwordConfirmation'))
     validations.push(new EmailValidation('email', new EmailValidatorAdapter()))
+    validations.push(new StrongPasswordValidation('password', new PasswordValidatorAdapter()))
     expect(ValidationComposite).toHaveBeenCalledWith(validations)
   })
 })

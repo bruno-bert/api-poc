@@ -10,3 +10,6 @@ export * from './api-key-auth-schema'
 export * from './save-survey-params-schema'
 export * from './survey-result-schema'
 export * from './survey-result-answer-schema'
+
+export * from './document-type-schema'
+export * from './add-document-type-params-schema'

@@ -2,12 +2,16 @@ import {
   loginPath,
   surveyPath,
   signUpPath,
-  surveyResultPath
+  surveyResultPath,
+  documentTypePath
 } from './paths/'
 
 export default {
   '/login': loginPath,
   '/signup': signUpPath,
   '/surveys': surveyPath,
-  '/surveys/{surveyId}/results': surveyResultPath
+  '/surveys/{surveyId}/results': surveyResultPath,
+
+  '/document-type': documentTypePath
+
 }

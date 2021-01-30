@@ -1,4 +1,6 @@
 export * from './add-survey-controller-factory'
+export * from './add-document-type-controller-factory'
+
 export * from './add-survey-validation-factory'
 export * from './load-survey-result-controller-factory'
 export * from './load-surveys-controller-factory'

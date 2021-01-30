@@ -12,7 +12,7 @@
 8. ✅ Gera um **token** de acesso a partir do ID do usuário
 9. ✅ **Atualiza** os dados do usuário com o token de acesso gerado
 10. ✅ Retorna **200** com o token de acesso e o nome do usuário
-11. **Valida** que o password segue recomendações de strong-password
+11. ✅ **Valida** que o password segue recomendações de strong-password
 
 
 > ## Exceções
@@ -26,4 +26,4 @@
 7. ✅ Retorna erro **500** se der erro ao tentar criar a conta do usuário
 8. ✅ Retorna erro **500** se der erro ao tentar gerar o token de acesso
 9. ✅ Retorna erro **500** se der erro ao tentar atualizar o usuário com o token de acesso gerado
-10. Retorne erro **400** se o password não seguir recomendações de strong-password
+10. ✅ Retorne erro **400** se o password não seguir recomendações de strong-password

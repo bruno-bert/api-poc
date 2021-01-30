@@ -1,4 +1,5 @@
 export * from './account'
 export * from './log'
 export * from './survey'
+export * from './document-type'
 export * from './survey-result'

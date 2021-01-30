@@ -1,4 +1,10 @@
 export * from './add-account'
+
+export * from './add-document-type'
+export * from './check-document-type-by-id'
+export * from './check-document-type-by-description'
+export * from './load-document-type'
+
 export * from './authentication'
 export * from './load-account-by-token'
 export * from './add-survey'

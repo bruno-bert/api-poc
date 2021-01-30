@@ -1,4 +1,5 @@
 export * from './add-account-factory'
+export * from './add-document-type-factory'
 export * from './load-account-by-token-factory'
 export * from './authentication-factory'
 export * from './add-survey-factory'

@@ -28,10 +28,14 @@ export default {
   }],
   tags: [{
     name: 'Login',
-    description: 'APIs relacionadas a Login'
+    description: 'APIs related to Authentication'
   }, {
     name: 'Enquete',
     description: 'APIs relacionadas a Enquete'
+  },
+  {
+    name: 'Document Type',
+    description: 'APIs related to Document Type'
   }],
   paths,
   schemas,

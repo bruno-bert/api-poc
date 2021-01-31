@@ -1,5 +1,6 @@
 import { HttpResponse } from '@/presentation/protocols'
 import { ServerError, UnauthorizedError } from '@/presentation/errors'
+import { RequestError } from '@/domain/errors'
 
 export const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,
@@ -30,3 +31,7 @@ export const noContent = (): HttpResponse => ({
   statusCode: 204,
   body: null
 })
+
+export const controllerError = (error: Error): HttpResponse => {
+  return (error instanceof RequestError ? badRequest(error) : serverError(error))
+}

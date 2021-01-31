@@ -1,5 +1,5 @@
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
-import { badRequest, serverError, ok } from '@/presentation/helpers'
+import { badRequest, controllerError, ok } from '@/presentation/helpers'
 import { AddDocumentType } from '@/domain/usecases'
 
 export class AddDocumentTypeController implements Controller {
@@ -21,7 +21,7 @@ export class AddDocumentTypeController implements Controller {
 
       return ok(documentType)
     } catch (error) {
-      return serverError(error)
+      return controllerError(error)
     }
   }
 }

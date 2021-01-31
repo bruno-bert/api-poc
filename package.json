@@ -8,6 +8,7 @@
   "homepage": "https://brunodeveloper.netlify.app",
   "scripts": {
     "start": "node dist/main/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify --watch src/**/*.ts src/main/server.ts",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "build:watch": "rimraf dist && tsc -p tsconfig-build.json -w",
@@ -23,7 +24,6 @@
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info"
   },
   "devDependencies": {
-    "husky": "^3.1.0",
     "@shelf/jest-mongodb": "^1.2.3",
     "@types/bcrypt": "^3.0.0",
     "@types/express": "^4.17.9",
@@ -51,12 +51,14 @@
     "eslint-plugin-standard": "^5.0.0",
     "faker": "^5.1.0",
     "git-commit-msg-linter": "^3.0.0",
+    "husky": "^3.1.0",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.2",
     "mockdate": "^3.0.2",
     "rimraf": "^3.0.2",
     "supertest": "^6.0.1",
     "ts-jest": "^26.4.4",
+    "ts-node-dev": "^1.1.1",
     "typescript": "^4.1.2"
   },
   "dependencies": {

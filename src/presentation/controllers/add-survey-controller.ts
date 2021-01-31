@@ -1,5 +1,5 @@
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
-import { badRequest, serverError, noContent } from '@/presentation/helpers'
+import { badRequest, controllerError, noContent } from '@/presentation/helpers'
 import { AddSurvey } from '@/domain/usecases'
 
 export class AddSurveyController implements Controller {
@@ -20,7 +20,7 @@ export class AddSurveyController implements Controller {
       })
       return noContent()
     } catch (error) {
-      return serverError(error)
+      return controllerError(error)
     }
   }
 }

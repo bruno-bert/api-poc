@@ -12,7 +12,7 @@ export const documentTypePath = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/document-type'
+              $ref: '#/schemas/documentType'
             }
           }
         }

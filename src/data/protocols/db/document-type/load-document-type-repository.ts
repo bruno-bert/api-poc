@@ -1,7 +1,7 @@
 import { DocumentTypeModel } from '@/domain/models'
 
 export interface LoadDocumentTypeRepository {
-  loadAll: (accountId: string) => Promise<LoadDocumentTypeRepository.Result>
+  loadAll: () => Promise<LoadDocumentTypeRepository.Result>
 }
 
 export namespace LoadDocumentTypeRepository {

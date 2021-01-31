@@ -8,6 +8,10 @@ import { hash } from 'bcrypt'
 
 let accountCollection: Collection
 let apolloServer: ApolloServer
+const testName = 'Bruno'
+const testMail = 'bruno.bert.jj@gmail.com'
+const weakPassword = '12345'
+const strongPassword = ' L23343_@abc'
 
 describe('Login GraphQL', () => {
   beforeAll(async () => {
@@ -35,28 +39,28 @@ describe('Login GraphQL', () => {
     `
 
     test('Should return an Account on valid credentials', async () => {
-      const password = await hash('123', 12)
+      const password = await hash(strongPassword, 12)
       await accountCollection.insertOne({
-        name: 'Rodrigo',
-        email: 'rodrigo.manguinho@gmail.com',
+        name: testName,
+        email: testMail,
         password
       })
       const { query } = createTestClient({ apolloServer })
       const res: any = await query(loginQuery, {
         variables: {
-          email: 'rodrigo.manguinho@gmail.com',
-          password: '123'
+          email: testMail,
+          password: strongPassword
         }
       })
       expect(res.data.login.accessToken).toBeTruthy()
-      expect(res.data.login.name).toBe('Rodrigo')
+      expect(res.data.login.name).toBe(testName)
     })
 
     test('Should return UnauthorizedError on invalid credentials', async () => {
       const { query } = createTestClient({ apolloServer })
       const res: any = await query(loginQuery, {
         variables: {
-          email: 'rodrigo.manguinho@gmail.com',
+          email: testMail,
           password: '123'
         }
       })
@@ -75,34 +79,48 @@ describe('Login GraphQL', () => {
       }
     `
 
+    test('Should return an error on weak password', async () => {
+      const { mutate } = createTestClient({ apolloServer })
+      const res: any = await mutate(signUpMutation, {
+        variables: {
+          name: testName,
+          email: testMail,
+          password: weakPassword,
+          passwordConfirmation: weakPassword
+        }
+      })
+      expect(res.data).toBeFalsy()
+      expect(res.errors[0].message).toBeTruthy()
+    })
+
     test('Should return an Account on valid data', async () => {
       const { mutate } = createTestClient({ apolloServer })
       const res: any = await mutate(signUpMutation, {
         variables: {
-          name: 'Rodrigo',
-          email: 'rodrigo.manguinho@gmail.com',
-          password: '123',
-          passwordConfirmation: '123'
+          name: testName,
+          email: testMail,
+          password: strongPassword,
+          passwordConfirmation: strongPassword
         }
       })
       expect(res.data.signUp.accessToken).toBeTruthy()
-      expect(res.data.signUp.name).toBe('Rodrigo')
+      expect(res.data.signUp.name).toBe(testName)
     })
 
     test('Should return EmailInUseError on invalid data', async () => {
-      const password = await hash('123', 12)
+      const password = await hash(strongPassword, 12)
       await accountCollection.insertOne({
-        name: 'Rodrigo',
-        email: 'rodrigo.manguinho@gmail.com',
+        name: testName,
+        email: testMail,
         password
       })
       const { mutate } = createTestClient({ apolloServer })
       const res: any = await mutate(signUpMutation, {
         variables: {
-          name: 'Rodrigo',
-          email: 'rodrigo.manguinho@gmail.com',
-          password: '123',
-          passwordConfirmation: '123'
+          name: testName,
+          email: testMail,
+          password: strongPassword,
+          passwordConfirmation: strongPassword
         }
       })
       expect(res.data).toBeFalsy()

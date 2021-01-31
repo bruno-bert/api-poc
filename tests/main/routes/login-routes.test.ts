@@ -6,6 +6,10 @@ import { hash } from 'bcrypt'
 import request from 'supertest'
 
 let accountCollection: Collection
+const testName = 'Bruno'
+const testMail = 'bruno.bert.jj@gmail.com'
+const weakPassword = '12345'
+const strongPassword = ' L23343_@abc'
 
 describe('Login Routes', () => {
   beforeAll(async () => {
@@ -22,23 +26,35 @@ describe('Login Routes', () => {
   })
 
   describe('POST /signup', () => {
-    test('Should return 200 on signup', async () => {
+    test('Should return 400 on signup with weak password', async () => {
       await request(app)
         .post('/api/signup')
         .send({
-          name: 'Rodrigo',
-          email: 'rodrigo.manguinho@gmail.com',
-          password: '123',
-          passwordConfirmation: '123'
+          name: testName,
+          email: testMail,
+          password: weakPassword,
+          passwordConfirmation: weakPassword
+        })
+        .expect(400)
+    })
+
+    test('Should return 200 on signup with strong password', async () => {
+      await request(app)
+        .post('/api/signup')
+        .send({
+          name: testName,
+          email: testMail,
+          password: strongPassword,
+          passwordConfirmation: strongPassword
         })
         .expect(200)
       await request(app)
         .post('/api/signup')
         .send({
-          name: 'Rodrigo',
-          email: 'rodrigo.manguinho@gmail.com',
-          password: '123',
-          passwordConfirmation: '123'
+          name: testName,
+          email: testMail,
+          password: strongPassword,
+          passwordConfirmation: strongPassword
         })
         .expect(403)
     })
@@ -46,17 +62,17 @@ describe('Login Routes', () => {
 
   describe('POST /login', () => {
     test('Should return 200 on login', async () => {
-      const password = await hash('123', 12)
+      const password = await hash(strongPassword, 12)
       await accountCollection.insertOne({
-        name: 'Rodrigo',
-        email: 'rodrigo.manguinho@gmail.com',
+        name: testName,
+        email: testMail,
         password
       })
       await request(app)
         .post('/api/login')
         .send({
-          email: 'rodrigo.manguinho@gmail.com',
-          password: '123'
+          email: testMail,
+          password: strongPassword
         })
         .expect(200)
     })
@@ -65,8 +81,8 @@ describe('Login Routes', () => {
       await request(app)
         .post('/api/login')
         .send({
-          email: 'rodrigo.manguinho@gmail.com',
-          password: '123'
+          email: testMail,
+          password: strongPassword
         })
         .expect(401)
     })

@@ -15,7 +15,7 @@ const strongPassword = ' L23343_@abc'
 
 const successRequestObject = {
   name: 'boleto mes março',
-  directory: 'test directory',
+  directory: { name: 'test directory' },
   path: 'test path',
   documentType: {
     description: 'boleto'
@@ -129,7 +129,7 @@ describe('Document Routes', () => {
 
       await request(app)
         .get('/api/document-by-directory')
-        .send({ directory: 'other_directory' })
+        .send({ directory: { name: 'other_directory' } })
         .set('x-access-token', accessToken)
         .expect(204)
     })

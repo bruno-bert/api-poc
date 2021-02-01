@@ -10,3 +10,6 @@ export * from './signup-validation-factory'
 
 export * from './add-document-type-controller-factory'
 export * from './load-document-type-controller-factory'
+
+export * from './document'
+export * from './directory'

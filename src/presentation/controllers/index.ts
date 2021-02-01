@@ -7,3 +7,6 @@ export * from './signup-controller'
 
 export * from './add-document-type-controller'
 export * from './load-document-type-controller'
+
+export * from './document'
+export * from './directory'

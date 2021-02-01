@@ -16,3 +16,6 @@ export * from './db-load-surveys'
 export * from './db-load-document-type'
 
 export * from './db-save-survey-result'
+
+export * from './document'
+export * from './directory'

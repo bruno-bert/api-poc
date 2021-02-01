@@ -10,3 +10,6 @@ export * from './save-survey-result-factory'
 
 export * from './add-document-type-factory'
 export * from './load-document-type-factory'
+
+export * from './document'
+export * from './directory'

@@ -9,6 +9,7 @@ import {
   CheckDocumentByDirectoryRepository
 } from '@/data/protocols/db'
 import { MongoDbError } from '@/infra/errors'
+import { DirectoryEntity } from '@/data/entities'
 
 import { ObjectId } from 'mongodb'
 
@@ -83,7 +84,7 @@ CheckDocumentByDirectoryRepository {
     return Document !== null
   }
 
-  async checkByDirectory (accountId: string, directory: string): Promise<CheckDocumentByDirectoryRepository.Result> {
+  async checkByDirectory (accountId: string, directory: DirectoryEntity): Promise<CheckDocumentByDirectoryRepository.Result> {
     const DocumentCollection = await MongoHelper.getCollection('Documents')
     const Document = await DocumentCollection.findOne({
       accountId,
@@ -96,7 +97,7 @@ CheckDocumentByDirectoryRepository {
     return Document !== null
   }
 
-  async loadByDirectory (accountId: string, directory: string):
+  async loadByDirectory (accountId: string, directory: DirectoryEntity):
   Promise<LoadDocumentByDirectoryRepository.Result> {
     const DocumentCollection = await MongoHelper.getCollection('Documents')
     const query = new QueryBuilder()

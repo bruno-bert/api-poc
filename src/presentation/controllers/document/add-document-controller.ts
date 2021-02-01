@@ -1,7 +1,7 @@
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
 import { badRequest, controllerError, ok } from '@/presentation/helpers'
 import { AddDocument } from '@/domain/usecases'
-import { DocumentTypeModel } from '@/domain/models'
+import { DirectoryModel, DocumentTypeModel } from '@/domain/models'
 
 export class AddDocumentController implements Controller {
   constructor (
@@ -31,7 +31,7 @@ export namespace AddDocumentController {
   export type Request = {
     accountId: string
     name: string
-    directory: string
+    directory: DirectoryModel
     path: string
     documentType: DocumentTypeModel
   }

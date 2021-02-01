@@ -1,5 +1,7 @@
+import { DirectoryModel } from '@/domain/models'
+
 export interface CheckDocumentByDirectory {
-  checkByDirectory: (accountId: string, directory: string) => Promise<CheckDocumentByDirectory.Result>
+  checkByDirectory: (accountId: string, directory: DirectoryModel) => Promise<CheckDocumentByDirectory.Result>
 }
 
 export namespace CheckDocumentByDirectory {

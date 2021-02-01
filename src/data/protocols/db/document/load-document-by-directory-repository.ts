@@ -1,7 +1,7 @@
-import { DocumentModel } from '@/domain/models'
+import { DocumentModel, DirectoryModel } from '@/domain/models'
 
 export interface LoadDocumentByDirectoryRepository {
-  loadByDirectory: (accountId: string, directory: string) => Promise<LoadDocumentByDirectoryRepository.Result>
+  loadByDirectory: (accountId: string, directory: DirectoryModel) => Promise<LoadDocumentByDirectoryRepository.Result>
 }
 
 export namespace LoadDocumentByDirectoryRepository {

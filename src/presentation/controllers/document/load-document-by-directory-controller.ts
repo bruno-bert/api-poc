@@ -1,6 +1,7 @@
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
 import { noContent, controllerError, ok, badRequest } from '@/presentation/helpers'
 import { LoadDocumentByDirectory } from '@/domain/usecases'
+import { DirectoryModel } from '@/domain/models'
 
 export class LoadDocumentByDirectoryController implements Controller {
   constructor (
@@ -24,6 +25,6 @@ export class LoadDocumentByDirectoryController implements Controller {
 export namespace LoadDocumentByDirectoryController {
   export type Request = {
     accountId: string
-    directory: string
+    directory: DirectoryModel
   }
 }

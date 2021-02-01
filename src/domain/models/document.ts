@@ -1,8 +1,8 @@
-import { DocumentTypeModel } from '@/domain/models'
+import { DocumentTypeModel, DirectoryModel } from '@/domain/models'
 export type DocumentModel = {
   id: string
   name: string
-  directory: string
+  directory: DirectoryModel
   path: string
   documentType: DocumentTypeModel
   date: Date

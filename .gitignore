@@ -7,3 +7,6 @@ data
 .vscode
 globalConfig.json
 sh.exe.stackdump
+public/uploads/*
+!public/uploads/.gitkeep
+.env

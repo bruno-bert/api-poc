@@ -6,7 +6,8 @@ import {
   CheckDocumentByIdRepository,
   LoadDocumentByDirectoryRepository,
   CheckDocumentByNameRepository,
-  CheckDocumentByDirectoryRepository
+  CheckDocumentByDirectoryRepository,
+  DeleteDocumentByIdRepository
 } from '@/data/protocols/db'
 import { MongoDbError } from '@/infra/errors'
 import { DirectoryEntity } from '@/data/entities'
@@ -18,7 +19,8 @@ AddDocumentRepository,
 LoadDocumentRepository,
 LoadDocumentByIdRepository, CheckDocumentByIdRepository,
 LoadDocumentByDirectoryRepository,
-CheckDocumentByDirectoryRepository {
+CheckDocumentByDirectoryRepository,
+DeleteDocumentByIdRepository {
   async add (data: AddDocumentRepository.Params): Promise<AddDocumentRepository.Result> {
     const DocumenTypeCollection = await MongoHelper.getCollection('Documents')
     const Document = await DocumenTypeCollection.insertOne(data)
@@ -41,13 +43,13 @@ CheckDocumentByDirectoryRepository {
         localField: '_id',
         as: 'result'
       })
-      .project({
+     /*  .project({
         _id: 1,
         name: 1,
         directory: 1,
         path: 1,
         date: 1
-      })
+      }) */
       .build()
     const Documents = await DocumentCollection.aggregate(query).toArray()
     return MongoHelper.mapCollection(Documents)
@@ -70,6 +72,18 @@ CheckDocumentByDirectoryRepository {
     })
     return Document !== null
   }
+
+
+
+
+  async deleteById (id: string): Promise<DeleteDocumentByIdRepository.Result> {
+    const DocumentCollection = await MongoHelper.getCollection('Documents')
+    const result = await DocumentCollection.deleteOne({
+      _id: new ObjectId(id)
+    })
+    return result.deletedCount === 1
+  }
+
 
   async checkByName (accountId: string, name: string): Promise<CheckDocumentByNameRepository.Result> {
     const DocumentCollection = await MongoHelper.getCollection('Documents')
@@ -111,13 +125,13 @@ CheckDocumentByDirectoryRepository {
         localField: '_id',
         as: 'result'
       })
-      .project({
+    /*   .project({
         _id: 1,
         name: 1,
         directory: 1,
         path: 1,
         date: 1
-      })
+      }) */
       .build()
     const Documents = await DocumentCollection.aggregate(query).toArray()
     return MongoHelper.mapCollection(Documents)

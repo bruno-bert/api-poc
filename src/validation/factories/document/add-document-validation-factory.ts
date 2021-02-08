@@ -4,12 +4,12 @@ import { Validation } from '@/presentation/protocols'
 export const makeAddDocumentValidation = (): ValidationComposite => {
   const validations: Validation[] = []
 
-  for (const field of ['name', 'path']) {
+  for (const field of ['name']) {
     validations.push(new RequiredFieldValidation(field))
     validations.push(new RangeCharsFieldValidation(field, { min: 3, max: 20 }))
   }
 
-  for (const field of ['path', 'directory', 'documentType']) {
+  for (const field of ['file', 'directory', 'documentType']) {
     validations.push(new RequiredFieldValidation(field))
   }
 

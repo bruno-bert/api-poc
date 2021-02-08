@@ -67,6 +67,7 @@
     "apollo-server-express": "^2.19.0",
     "aws-sdk": "^2.839.0",
     "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^15.4.0",
     "graphql-iso-date": "^3.6.1",

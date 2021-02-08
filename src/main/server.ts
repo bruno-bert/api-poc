@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 import 'module-alias/register'
 import env from '@/main/config/env'
 import { MongoHelper } from '@/infra/db'

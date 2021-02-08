@@ -1,10 +1,23 @@
 import { adaptRoute } from '@/main/adapters'
-import { makeAddDocumentController, makeLoadDocumentController, makeLoadDocumentByDirectoryController } from '@/main/factories'
+
+import {
+  makeAddDocumentController,
+  makeDeleteDocumentController,
+  makeDeleteDocumentFromBucketController,
+  makeLoadDocumentController,
+  makeLoadDocumentByDirectoryController,
+  makeDeleteDocumentDbAndBucketControllerDecorator
+} from '@/main/factories'
+
 import { auth } from '@/main/middlewares'
 import { Router } from 'express'
+import multerConfig from '@/infra/http/multer-config'
+import multer from 'multer'
 
 export default (router: Router): void => {
-  router.post('/document',auth, adaptRoute(makeAddDocumentController()))
-  router.get('/document',auth, adaptRoute(makeLoadDocumentController()))
+  router.post('/document', auth, multer(multerConfig).single('file'), adaptRoute(makeAddDocumentController()))
+  router.delete('/document/:id', auth, adaptRoute(makeDeleteDocumentDbAndBucketControllerDecorator(makeDeleteDocumentController())))
+  router.delete('/document/bucket/:id', auth, adaptRoute(makeDeleteDocumentFromBucketController()))
+  router.get('/document', auth, adaptRoute(makeLoadDocumentController()))
   router.get('/document-by-directory',auth, adaptRoute(makeLoadDocumentByDirectoryController()))
 }

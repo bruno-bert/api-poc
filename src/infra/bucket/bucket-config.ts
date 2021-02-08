@@ -1,5 +1,5 @@
 import path from 'path'
-export const s3Config = {
+export const bucketConfig = {
   bucketName: process.env.AWS_BUCKET ,
   storageType: process.env.STORAGE_TYPE || 'local',
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,

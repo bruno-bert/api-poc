@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import aws from 'aws-sdk'
 import multerS3 from 'multer-s3'
 import multer from 'multer'
-import { s3Config as config } from '../config/s3-config'
+import { bucketConfig as config } from '../bucket/bucket-config'
 
 const storageTypes = {
   local: multer.diskStorage({

@@ -1,6 +1,7 @@
 import { Controller, HttpResponse } from '@/presentation/protocols'
 import { DeleteDocumentByIdRepository, LoadDocumentByIdRepository } from '@/data/protocols/db'
 import { DocumentModel } from '@/domain/models'
+import {  controllerError } from '@/presentation/helpers'
 
 export class DeleteDocumentFromDbAndBucketControllerDecorator implements Controller {
   constructor (
@@ -11,14 +12,19 @@ export class DeleteDocumentFromDbAndBucketControllerDecorator implements Control
 
   async handle (request: DeleteDocumentFromDbAndBucketControllerDecorator.Request): Promise<HttpResponse> {
 
-    const result: DocumentModel  = await this.loadDocumentByIdRepository.loadById(request.id)
+    try {
+      const result: DocumentModel  = await this.loadDocumentByIdRepository.loadById(request.id)
 
-    const httpResponse = await this.deleteDocumentController.handle(request)
-
-    if (httpResponse.statusCode === 200 && result?.file) {
-      await this.deleteDocumentByIdRepository.deleteById(result.file.key)
+      const httpResponse = await this.deleteDocumentController.handle(request)
+  
+      if (httpResponse.statusCode === 200 && result?.file) {
+        await this.deleteDocumentByIdRepository.deleteById(result.file.key)
+      }
+      return httpResponse
+    } catch(error){
+      return controllerError(error)
     }
-    return httpResponse
+    
   }
 }
 

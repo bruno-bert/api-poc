@@ -13,3 +13,4 @@ export * from './load-document-type-factory'
 
 export * from './document'
 export * from './directory'
+export * from './bucket-repository-factory'

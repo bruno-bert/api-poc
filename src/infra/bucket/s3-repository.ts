@@ -2,7 +2,7 @@ import aws from 'aws-sdk'
 import {
   DeleteDocumentByIdRepository
 } from '@/data/protocols/db'
-import { s3Config as config } from '../../config/s3-config'
+import { bucketConfig as config } from './bucket-config'
 import { S3Error } from '@/infra/errors'
 
 export class S3Repository implements

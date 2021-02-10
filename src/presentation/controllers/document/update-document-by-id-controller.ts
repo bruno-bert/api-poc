@@ -1,18 +1,18 @@
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
 import { badRequest, controllerError, ok } from '@/presentation/helpers'
-import { AddDocument } from '@/domain/usecases'
+import { UpdateDocumentById } from '@/domain/usecases'
 import { FileModel } from "@/domain/models"
 import { setDocumentUrl } from "../../utils" 
- 
-export class AddDocumentController implements Controller {
+
+export class UpdateDocumentByIdController implements Controller {
   constructor (
     private readonly validation: Validation,
-    private readonly addDocument: AddDocument
+    private readonly updateDocumentById: UpdateDocumentById
   ) {}
   
- 
 
-  mapFileModel(file: AddDocumentController.File): FileModel {
+
+  mapFileModel(file: UpdateDocumentByIdController.File): FileModel {
     return {
       originalname: file.originalname,
       size: file.size,
@@ -21,7 +21,7 @@ export class AddDocumentController implements Controller {
       type: file.mimetype
     }
   }
-  mapAddDocumentModel (request: AddDocumentController.Request): any {
+  mapDocumentModel (request: UpdateDocumentByIdController.Request): any {
     return {
       name: request.file.originalname,
       documentType: { description: request.documentType },
@@ -31,15 +31,15 @@ export class AddDocumentController implements Controller {
     }
   }
 
-  async handle (request: AddDocumentController.Request): Promise<HttpResponse> {
+  async handle (request: UpdateDocumentByIdController.Request): Promise<HttpResponse> {
     try {
-      const model = this.mapAddDocumentModel(request)
+      const model = this.mapDocumentModel(request)
       const error = this.validation.validate(model)
       if (error) {
         return badRequest(error)
       }
 
-      const Document = await this.addDocument.add({
+      const Document = await this.updateDocumentById.updateById(request.id, {
         ...model,
         date: new Date()
       })
@@ -51,8 +51,9 @@ export class AddDocumentController implements Controller {
   }
 }
 
-export namespace AddDocumentController {
+export namespace UpdateDocumentByIdController {
   export type Request = {
+    id: string
     accountId: string
     name: string
     directory: string

@@ -6,7 +6,7 @@ import {
   makeDeleteDocumentFromBucketController,
   makeLoadDocumentController,
   makeLoadDocumentByDirectoryController,
-  makeDeleteDocumentDbAndBucketControllerDecorator
+  makeUpdateDocumentByIdController
 } from '@/main/factories'
 
 import { auth } from '@/main/middlewares'
@@ -16,7 +16,8 @@ import multer from 'multer'
 
 export default (router: Router): void => {
   router.post('/document', auth, multer(multerConfig).single('file'), adaptRoute(makeAddDocumentController()))
-  router.delete('/document/:id', auth, adaptRoute(makeDeleteDocumentDbAndBucketControllerDecorator(makeDeleteDocumentController())))
+  router.delete('/document/:id', auth, adaptRoute(makeDeleteDocumentController()))
+  router.put('/document/:id', auth, adaptRoute(makeUpdateDocumentByIdController()))
   router.delete('/document/bucket/:id', auth, adaptRoute(makeDeleteDocumentFromBucketController()))
   router.get('/document', auth, adaptRoute(makeLoadDocumentController()))
   router.get('/document-by-directory',auth, adaptRoute(makeLoadDocumentByDirectoryController()))

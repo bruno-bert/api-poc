@@ -7,7 +7,8 @@ import {
   LoadDocumentByDirectoryRepository,
   CheckDocumentByNameRepository,
   CheckDocumentByDirectoryRepository,
-  DeleteDocumentByIdRepository
+  DeleteDocumentByIdRepository,
+  UpdateDocumentByIdRepository
 } from '@/data/protocols/db'
 import { MongoDbError } from '@/infra/errors'
 import { DirectoryEntity } from '@/data/entities'
@@ -20,7 +21,8 @@ LoadDocumentRepository,
 LoadDocumentByIdRepository, CheckDocumentByIdRepository,
 LoadDocumentByDirectoryRepository,
 CheckDocumentByDirectoryRepository,
-DeleteDocumentByIdRepository {
+DeleteDocumentByIdRepository,
+UpdateDocumentByIdRepository {
   async add (data: AddDocumentRepository.Params): Promise<AddDocumentRepository.Result> {
     const DocumenTypeCollection = await MongoHelper.getCollection('Documents')
     const Document = await DocumenTypeCollection.insertOne(data)
@@ -72,6 +74,33 @@ DeleteDocumentByIdRepository {
     })
     return Document !== null
   }
+
+  async updateById (id: string, data: UpdateDocumentByIdRepository.Params): Promise<UpdateDocumentByIdRepository.Result> {
+    const DocumenTypeCollection = await MongoHelper.getCollection('Documents')
+    
+    const query = {
+      _id: new ObjectId(id)
+    }
+    console.log('id', id)
+
+    const update =  { $set: {
+      name: data.name, 
+      documentType: data.documentType, 
+      directory: data.directory,
+      file: data.file,
+      date: data.date,
+      accountId: data.accountId
+     }
+    }
+
+    const Document = await DocumenTypeCollection.findOneAndUpdate( query , update  )
+    if (Document.value) {
+      return MongoHelper.map(Document.value)
+    } else {
+      throw new MongoDbError('update', 'Document returned null')
+    }
+  }
+
 
 
 

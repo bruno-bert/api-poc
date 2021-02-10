@@ -3,6 +3,9 @@ import aws from 'aws-sdk'
 import multerS3 from 'multer-s3'
 import multer from 'multer'
 import { bucketConfig as config } from '../bucket/bucket-config'
+/* import path from 'path'
+import fs from 'fs'
+import { LocalBucketError } from '../errors' */
 
 const storageTypes = {
   local: multer.diskStorage({
@@ -12,10 +15,15 @@ const storageTypes = {
     filename: (req, file: any, cb) => {
       crypto.randomBytes(16, (err, hash) => {
         if (err) cb(err, null)
-
         file.key = `${hash.toString('hex')}-${file.originalname}`
-
         cb(null, file.key)
+
+        /** TODO - figure out a way to check if file exists already in local folder */
+        /* if (!fs.existsSync(path.join(config.pathToSave,file.originalname))) 
+          cb(null, file.key)
+        else
+          cb(new LocalBucketError(0, `File ${file.originalname} already exists`), file.key) */
+       
       })
     }
   }),
@@ -30,9 +38,8 @@ const storageTypes = {
     key: (req, file, cb) => {
       crypto.randomBytes(16, (err, hash) => {
         if (err) cb(err)
-
+        /** TODO - figure out a way to check if file exists already in s3 folder */
         const fileName = `${hash.toString('hex')}-${file.originalname}`
-
         cb(null, fileName)
       })
     }

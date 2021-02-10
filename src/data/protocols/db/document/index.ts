@@ -1,5 +1,7 @@
 export * from './add-document-repository'
 export * from './load-document-by-id-repository'
+export * from './update-document-by-id-repository'
+
 
 export * from './check-document-by-id-repository'
 export * from './delete-document-by-id-repository'

@@ -1,13 +1,13 @@
 import aws from 'aws-sdk'
 import {
-  DeleteDocumentByIdRepository
-} from '@/data/protocols/db'
+  BucketDeleteDocumentByIdAdapter
+} from '@/data/protocols/bucket'
 import { bucketConfig as config } from './bucket-config'
 import { S3Error } from '@/infra/errors'
 
 export class S3Repository implements
-DeleteDocumentByIdRepository {
-  async deleteById (id: string): Promise<DeleteDocumentByIdRepository.Result> {
+BucketDeleteDocumentByIdAdapter {
+  async deleteById (id: string): Promise<BucketDeleteDocumentByIdAdapter.Result> {
    
     const s3 = new aws.S3({
       accessKeyId: config.accessKeyId,
@@ -21,7 +21,6 @@ DeleteDocumentByIdRepository {
     return new Promise((resolve, reject)=>{
       s3.deleteObject(params, function (err, data) {
         if (err) {
-          console.log(err, err.stack) 
           reject(new S3Error(err.stack))
         } else {         
           resolve(true) 

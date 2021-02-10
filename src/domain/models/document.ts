@@ -3,10 +3,12 @@ export type DocumentModel = {
   id: string
   name: string
   directory: DirectoryModel
-  file: FileModel
+  file?: FileModel
   documentType: DocumentTypeModel
   date: Date
+  accountId: string
 }
+
 
 export type FileModel = {
   originalname: string

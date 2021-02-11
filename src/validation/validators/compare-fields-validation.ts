@@ -1,5 +1,6 @@
 import { Validation } from '@/presentation/protocols'
 import { InvalidParamError } from '@/presentation/errors'
+import { _get } from '@/data/helpers'
 
 export class CompareFieldsValidation implements Validation {
   constructor (
@@ -8,7 +9,9 @@ export class CompareFieldsValidation implements Validation {
   ) {}
 
   validate (input: any): Error {
-    if (input[this.fieldName] !== input[this.fieldToCompareName]) {
+    const value = _get(input, this.fieldName)
+    const valueToCompare = _get(input, this.fieldToCompareName)
+    if (value !== valueToCompare) {
       return new InvalidParamError(this.fieldToCompareName)
     }
   }

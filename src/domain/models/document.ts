@@ -2,13 +2,15 @@ import { DocumentTypeModel, DirectoryModel } from '@/domain/models'
 export type DocumentModel = {
   id: string
   name: string
-  directory: DirectoryModel
+  directory: RelationalDirectoryModel
   file?: FileModel
-  documentType: DocumentTypeModel
+  documentType: RelationalDocumentTypeModel
   date: Date
   accountId: string
 }
 
+export type RelationalDirectoryModel = Omit<DirectoryModel,'id'|'date'>
+export type RelationalDocumentTypeModel = Omit<DocumentTypeModel,'id'|'date'>
 
 export type FileModel = {
   originalname: string

@@ -1,50 +1,24 @@
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols'
 import { badRequest, controllerError, ok } from '@/presentation/helpers'
 import { AddDocument } from '@/domain/usecases'
-import { FileModel } from "@/domain/models"
-import { setDocumentUrl } from "../../utils" 
- 
+import { mapAddRequestToModel, mapModelToView } from '@/presentation/view-models/document'
+
 export class AddDocumentController implements Controller {
   constructor (
     private readonly validation: Validation,
     private readonly addDocument: AddDocument
   ) {}
-  
- 
-
-  mapFileModel(file: AddDocumentController.File): FileModel {
-    return {
-      originalname: file.originalname,
-      size: file.size,
-      key: file.key,
-      url: setDocumentUrl(file),
-      type: file.mimetype
-    }
-  }
-  mapAddDocumentModel (request: AddDocumentController.Request): any {
-    return {
-      name: request.file.originalname,
-      documentType: { description: request.documentType },
-      directory: { name: request.directory || 'root' },
-      file: this.mapFileModel(request.file),
-      accountId: request.accountId
-    }
-  }
 
   async handle (request: AddDocumentController.Request): Promise<HttpResponse> {
     try {
-      const model = this.mapAddDocumentModel(request)
+      const model = mapAddRequestToModel(request)
       const error = this.validation.validate(model)
       if (error) {
         return badRequest(error)
       }
 
-      const Document = await this.addDocument.add({
-        ...model,
-        date: new Date()
-      })
-
-      return ok(Document)
+      const Document = await this.addDocument.add(model)
+      return ok(mapModelToView(Document))
     } catch (error) {
       return controllerError(error)
     }

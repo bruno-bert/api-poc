@@ -5,7 +5,7 @@ import { DeleteDocumentController } from '@/presentation/controllers'
 
 export const makeDeleteDocumentFromBucketController = (): Controller => {
   const controller = new DeleteDocumentController(
-    makeDeleteDocumentFromBucketValidation(), 
+    makeDeleteDocumentFromBucketValidation(),
     makeBucketDeleteDocument())
   return makeLogControllerDecorator(controller)
 }

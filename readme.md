@@ -5,4 +5,7 @@
 
 # **API to App POC**
 
-Work in progress
+### ToDos
+
+- no update do documento, permitir a atualização do "file"
+- no update do documento, ao atualizar o file, precisa apagar o arquivo anterior do bucket

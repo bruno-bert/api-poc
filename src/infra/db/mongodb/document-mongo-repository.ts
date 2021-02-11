@@ -29,7 +29,7 @@ UpdateDocumentByIdRepository {
     if (Document) {
       return MongoHelper.map(Document.ops[0])
     } else {
-      throw new MongoDbError('add', 'Document returned null')
+      throw new MongoDbError('add', 'Document could not be inserted')
     }
   }
 
@@ -45,13 +45,6 @@ UpdateDocumentByIdRepository {
         localField: '_id',
         as: 'result'
       })
-     /*  .project({
-        _id: 1,
-        name: 1,
-        directory: 1,
-        path: 1,
-        date: 1
-      }) */
       .build()
     const Documents = await DocumentCollection.aggregate(query).toArray()
     return MongoHelper.mapCollection(Documents)
@@ -77,33 +70,29 @@ UpdateDocumentByIdRepository {
 
   async updateById (id: string, data: UpdateDocumentByIdRepository.Params): Promise<UpdateDocumentByIdRepository.Result> {
     const DocumenTypeCollection = await MongoHelper.getCollection('Documents')
-    
+
     const query = {
       _id: new ObjectId(id)
     }
-    console.log('id', id)
 
-    const update =  { $set: {
-      name: data.name, 
-      documentType: data.documentType, 
-      directory: data.directory,
-      file: data.file,
-      date: data.date,
-      accountId: data.accountId
-     }
+    const update = {
+      $set: {
+        name: data.name,
+        documentType: data.documentType,
+        directory: data.directory,
+        file: data.file,
+        date: data.date,
+        accountId: data.accountId
+      }
     }
 
-    const Document = await DocumenTypeCollection.findOneAndUpdate( query , update  )
+    const Document = await DocumenTypeCollection.findOneAndUpdate(query , update, { returnOriginal: false })
     if (Document.value) {
       return MongoHelper.map(Document.value)
     } else {
-      throw new MongoDbError('update', 'Document returned null')
+      throw new MongoDbError('update', 'Document not found')
     }
   }
-
-
-
-
 
   async deleteById (id: string): Promise<DeleteDocumentByIdRepository.Result> {
     const DocumentCollection = await MongoHelper.getCollection('Documents')
@@ -112,7 +101,6 @@ UpdateDocumentByIdRepository {
     })
     return result.deletedCount === 1
   }
-
 
   async checkByName (accountId: string, name: string): Promise<CheckDocumentByNameRepository.Result> {
     const DocumentCollection = await MongoHelper.getCollection('Documents')

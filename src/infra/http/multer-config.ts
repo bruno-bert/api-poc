@@ -19,11 +19,10 @@ const storageTypes = {
         cb(null, file.key)
 
         /** TODO - figure out a way to check if file exists already in local folder */
-        /* if (!fs.existsSync(path.join(config.pathToSave,file.originalname))) 
+        /* if (!fs.existsSync(path.join(config.pathToSave,file.originalname)))
           cb(null, file.key)
         else
           cb(new LocalBucketError(0, `File ${file.originalname} already exists`), file.key) */
-       
       })
     }
   }),

@@ -9,23 +9,20 @@ export class DbDeleteDocumentById implements DeleteDocumentById {
     private readonly deleteDocumentFromBucketByIdRepository?: BucketDeleteDocumentByIdAdapter) {}
 
   async deleteById (id: string): Promise<DeleteDocumentById.Result> {
-
     let result: boolean
     const document = await this.loadDocumentByIdRepository.loadById(id)
-    
+
     if (document) {
-      if (this.deleteDocumentByIdRepository)
-        result = await this.deleteDocumentByIdRepository.deleteById(id)
-      
+      if (this.deleteDocumentByIdRepository) { result = await this.deleteDocumentByIdRepository.deleteById(id) }
+
       /** if document has bucket/file info, try to delete from bucket */
       if ((this.deleteDocumentFromBucketByIdRepository) && (document.file?.key)) {
-        this.deleteDocumentFromBucketByIdRepository.deleteById(document.file.key)
+        await this.deleteDocumentFromBucketByIdRepository.deleteById(document.file.key)
       }
 
       return result
     } else {
       throw new FileNotFoundError()
     }
-    
   }
 }

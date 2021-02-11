@@ -1,1 +1,1 @@
-export * from "./set-document-url"
+export * from './set-document-url'

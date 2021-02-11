@@ -8,7 +8,7 @@
   "homepage": "https://brunodeveloper.netlify.app",
   "scripts": {
     "start": "node dist/main/server.js",
-    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules --no-notify --watch src/**/*.ts src/main/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --watch src/**/*.ts --ignore-watch node_modules --no-notify src/main/server.ts",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "build:watch": "rimraf dist && tsc -p tsconfig-build.json -w",
@@ -21,7 +21,8 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
-    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info"
+    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
+    "lint": "eslint . --fix"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.3",
@@ -33,6 +34,7 @@
     "@types/graphql-iso-date": "^3.4.0",
     "@types/jest": "^26.0.15",
     "@types/jsonwebtoken": "^8.5.0",
+    "@types/lodash.get": "^4.4.6",
     "@types/mongodb": "^3.5.34",
     "@types/multer": "^1.4.5",
     "@types/multer-s3": "^2.7.9",
@@ -72,6 +74,7 @@
     "graphql": "^15.4.0",
     "graphql-iso-date": "^3.6.1",
     "jsonwebtoken": "^8.5.1",
+    "lodash.get": "^4.4.2",
     "module-alias": "^2.2.2",
     "mongo-round": "^1.0.0",
     "mongodb": "^3.6.3",

@@ -4,6 +4,6 @@ import { DbDeleteDocumentById } from '@/data/usecases'
 import { makeBucketRepository } from '../bucket-repository-factory'
 
 export const makeDbDeleteDocument = (): DeleteDocumentById => {
-  const documentMongoRepository = new DocumentMongoRepository() 
-  return new DbDeleteDocumentById(documentMongoRepository, documentMongoRepository, makeBucketRepository() )
+  const documentMongoRepository = new DocumentMongoRepository()
+  return new DbDeleteDocumentById(documentMongoRepository, documentMongoRepository, makeBucketRepository())
 }

@@ -9,7 +9,7 @@ export const makeAddDocumentValidation = (): ValidationComposite => {
     validations.push(new RangeCharsFieldValidation(field, { min: 3, max: 20 }))
   }
 
-  for (const field of ['file', 'directory', 'documentType']) {
+  for (const field of ['directory.name', 'documentType.description']) {
     validations.push(new RequiredFieldValidation(field))
   }
 

@@ -8,18 +8,16 @@ export class BucketDeleteDocumentById implements DeleteDocumentById {
     private readonly bucketDeleteDocumentByIdAdapter: BucketDeleteDocumentByIdAdapter) {}
 
   async deleteById (id: string): Promise<DeleteDocumentById.Result> {
-
     let result: boolean
     const document = await this.loadDocumentByIdRepository.loadById(id)
-    
-    if (document?.file?.key)    
-      result = await this.bucketDeleteDocumentByIdAdapter.deleteById(document.file.key)
-      
+
+    if (document?.file?.key) { result = await this.bucketDeleteDocumentByIdAdapter.deleteById(document.file.key) }
+
     if (document) {
-      delete document.file 
-      this.updateDocumentByIdRepository.updateById(id, document)
+      delete document.file
+      await this.updateDocumentByIdRepository.updateById(id, document)
     }
 
-    return result  
+    return result
   }
 }
